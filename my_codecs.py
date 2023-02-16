@@ -3,10 +3,9 @@ from utils import ROOT_DIR
 from models.CompressaiPretrained.BaseModel import BaseModel as PretrainedCompressAIModel
 from models.CompressaiTraditional.compressor import traditional_compress 
 from models.InvCompress.InvCompress import InvCompress as InvCompressClass
-from models.Coarse2Fine.Coarse2Fine import compress_coarse2fine
+# from models.Coarse2Fine.Coarse2Fine import compress_coarse2fine
 import torch
 
-SCRIPT_DIR = './run_scripts'
 CompressAIPretrainedCodecs = ['cheng2020-anchor',
     'mbt2018-mean',
     'bmshj2018-factorized',
@@ -21,7 +20,6 @@ CompressAIPretrainedCodecs = ['cheng2020-anchor',
 def InvCompress(arch, img_path, q, save_path, new_img_name, **kwargs):
     compressor = InvCompressClass('./models/InvCompress/experiments') 
     path, bpp = compressor.compress(img_path, q, save_path, new_img_name, cuda=kwargs['cuda'])
-
     return path, float(bpp)
 
 
@@ -37,12 +35,12 @@ def CompressaiTraditional(arch, img_path, q, save_path, new_img_name, **kwargs):
     return path, float(bpp)
 
 
-@torch.no_grad()
-def Coarse2Fine(arch, img_path, q, save_path, new_img_name, **kwargs):
-    loss = kwargs['loss']
-    device = 'cuda' if kwargs['cuda'] else 'cpu'
-    path, bpp = compress_coarse2fine(img_path, save_path, q, new_img_name, loss, device)
-    return path, float(bpp)
+# @torch.no_grad()
+# def Coarse2Fine(arch, img_path, q, save_path, new_img_name, **kwargs):
+#     loss = kwargs['loss']
+#     device = 'cuda' if kwargs['cuda'] else 'cpu'
+#     path, bpp = compress_coarse2fine(img_path, save_path, q, new_img_name, loss, device)
+#     return path, float(bpp)
 
 
 methods = {
@@ -63,5 +61,5 @@ methods = {
     'jpeg': CompressaiTraditional,
 
     'invcompress': InvCompress,
-    'coarse2fine': Coarse2Fine
+    # 'coarse2fine': Coarse2Fine
 }
