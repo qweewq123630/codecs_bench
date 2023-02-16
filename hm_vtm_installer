@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+mkdir codecs
+cd codecs
+
+git clone https://vcgit.hhi.fraunhofer.de/jvet/HM.git
+
+cd HM
+mkdir build
+
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+
+make -j
+make -j
+
+
+cd ../../
+
+
+git clone https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM.git
+
+cd VVCSoftware_VTM
+mkdir build 
+
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+
+make -j 3
+make -j 3
